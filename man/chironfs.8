@@ -1,0 +1,107 @@
+.\" Copyright (c) 2007-2008 Luis Otavio de Colla Furquim
+.\" This file may be copied under the terms of the GPLv3 included in this package and also found at its original location http://www.gnu.org/licenses/gpl-3.0.html
+.TH "ChironFS" "8" "1.1" "Luis Otavio de Colla Furquim" "Kernel/Filesystems"
+.SH "NAME"
+ChironFS \- Chiron Filesystem is a fault-tolerant replication file system.
+.SH "SYNOPSIS"
+.B chironfs
+[\fIOPTIONS\fR] \fIpath\fR=\fIpath\fR[=\fIpath\fR...] \fImount\-point\fR
+.SH "DESCRIPTION"
+Chiron FS is a FUSE based filesystem that implements replication at the
+filesystem level like RAID 1 does at the device level.
+
+Each replica \fIpath\fR is given on the command line, separated by an equal
+sign ("="). If a replica path is prefixed with a colon (":"), then that
+replica will be considered slower than the others and the load balancing
+algorithm will choose it only if the faster replicas fail.
+
+The \fImount\-point\fR must be an already existing directory.
+.SH "OPTIONS"
+.TP
+.B "\-c, \-\-ctl CONTROLFILESYSTEMPATHNAME"
+By providing a mountpoint with this option, ChironFS will also mount a
+proc\-like filesystem intended to enable administrative functions of the
+replication filesystem. Currently you can check the status of each replica
+and manually change it. So, you can force disable a replica and, if you have
+already reoperated a replica and synchronized it with the others, you may tell
+ChironFS to use it again. The control filesystem is composed of one directory
+for each replica, containing two files: the first is named "status" and
+contains a number "0" for replicas in good state or a number "2" if the
+replica is disabled and the data is inconsistent. By echoing "0" or "2" in
+this file you enable or disable the replica. The second file, named
+"check_chironfs.sh", is a script intended to run as a nagios plugin. If you
+want to use it, do not copy it to another path, because its contents change
+dynamically and it will not work in another path. You cannot change ownership
+or permission bits on any of the files/directories in this filesystem. To
+configure who can access it, change the ownership of its mount point BEFORE
+mounting it. ChironFS will use this ownership to all files and directories
+under it.
+.TP
+.B "\-d"
+Enable debug output (implies \-f)
+.TP
+.B "\-f"
+Run in foreground.
+.TP
+.B "\-h, \-\-help"
+Prints the help
+.TP
+.B "\-l FILE, \-\-log FILE"
+Sets a log filename. If you don't set it, no log will be done at all.
+.TP
+.B "\-n NAME, \-\-fsname NAME"
+Defines the filesystem label name, for viewing it in df or mount.
+.TP
+.B "\-o FUSE OPTIONS"
+Here you can set Fuse specific options. For instance,
+     allow_other
+        allow access to other users
+     allow_root
+        allow access to root
+     nonempty
+        allow mounts over non\-empty file/dir
+     default_permissions
+        enable permission checking by kernel
+.br
+See \fBmount.fuse\fR(8) for the full description of the available options.
+.TP
+.B "\-q, \-\-quiet"
+Do not print error messages to stderr, just set the exit codes.
+This does not affect logging.
+.TP
+.B "\-s"
+Disable multi\-threaded operation
+.TP
+.B "\-V, \-\-version"
+Prints version of the software.
+.SH "DIAGNOSTICS "
+If you specify a log file using the \-l or the \-\-log command
+line option you will have critical failures reported in that
+file. There are two types of reports in this file: the
+failure report and the disable report. The failure report
+indicates the action failed, the path of the replica that
+failed and the related errno message. The disable report just
+tell us that a replica is being disabled and so it's
+inconsistent. The reintegration process of the replica have
+to be made manually in this version. We suggest you use rsync
+to do it. After the data synchronization you have to remount
+the chiron filesystem. A replica is disabled ONLY IF a write
+operation was FAILED in the disabled replica AND the same
+operation was SUCCESSFUL in another replica.
+.SH "EXAMPLE"
+Mount /mnt/database using three replicas: /mnt/server1, /mnt/server2 and
+/mnt/backup. Note the colon before the last replica which will lower
+its priority.
+.PP
+.nf
+.RS
+% chironfs /mnt/server1=/mnt/server2=:/mnt/backup /mnt/database
+.RE
+.fi
+.pp
+.SH "SEE ALSO"
+mount.fuse(8), fusermount(1), rsync(1), heartbeat at http://linux\-ha.org/Heartbeat.
+.SH "AUTHORS"
+The ChironFS replication Filesystem was created by Luis Otavio de Colla Furquim.
+.br
+Man page rewrite and extensions by Thiébaud Weksteen <thiebaud@weksteen.fr>
