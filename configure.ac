@@ -9,6 +9,9 @@ AM_INIT_AUTOMAKE
 # Checks for programs.
 AC_PROG_CC
 
+# Force large-file support on 32-bit platforms (required by fuse3: off_t must be 64-bit).
+AC_SYS_LARGEFILE
+
 # Checks for libraries.
 AC_CHECK_LIB(pthread, pthread_create)
 # Should check if pkg-config is installed
