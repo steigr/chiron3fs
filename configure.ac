@@ -1,7 +1,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.61)
-AC_INIT([chiron3fs], [3.0.1], [chiron3fs@stei.gr])
+AC_INIT([chiron3fs], [3.0.2], [chiron3fs@stei.gr])
 AC_CONFIG_SRCDIR([src/common.h])
 AC_CONFIG_HEADERS([config.h])
 AM_INIT_AUTOMAKE
@@ -55,5 +55,5 @@ AS_IF([test "x$enable_debug" = "xyes"], [
 
 AC_CONFIG_FILES([Makefile] [src/Makefile] [doc/Makefile] [man/Makefile] [test/Makefile])
 AC_DEFINE(PACKAGE, [chiron3fs], [Package Name])
-AC_DEFINE(VERSION, [3.0.1], [Package Version])
+AC_DEFINE(VERSION, [3.0.2], [Package Version])
 AC_OUTPUT
