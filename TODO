@@ -1,0 +1,13 @@
+1. [x] Support creating `.rpm` packages for Fedora Linux and `.deb` packages for Ubuntu and Debian.
+2. [x] Adjust project information:
+  2.1 [x] Maintainer is `steigr` with `<chiron3fs@stei.gr>`
+  2.2 [x] Project code is in `https://github.com/steigr/chiron3fs` git repo.
+3. [x] Implement GitHub Actions to build, test, and publish the project with release artifacts (`rpm` and `deb`) for i386/i686, amd64/x86_64, and arm64/aarch64.
+4. [x] Provide a simple GitHub Pages site with:
+  4.1 [x] a link to the latest release
+  4.2 [x] a link to the latest release changelog
+  4.3 [x] documentation on installation (binaries) and usage
+  4.4 [x] a link to the source code
+  4.5 [x] a link to project issues
+  4.6 [x] development howto / build-from-source guidance
+5. [x] Documentation covers integration with `/etc/fstab` and `systemd`.

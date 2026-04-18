@@ -1,0 +1,16 @@
+Source: chiron3fs
+Section: utils
+Priority: optional
+Maintainer: steigr <chiron3fs@stei.gr>
+Build-Depends: debhelper-compat (= 13), libfuse3-dev, pkgconf, gcc, make
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/steigr/chiron3fs
+
+Package: chiron3fs
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, fuse3
+Description: Fault-tolerant replicated filesystem facade built on FUSE3
+ chiron3fs mirrors filesystem operations to multiple replica directories
+ through a single mounted facade filesystem.
+

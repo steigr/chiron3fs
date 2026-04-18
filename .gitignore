@@ -19,3 +19,7 @@ Makefile.in
 *.iml
 /src/chiron3fs
 /src/chiron3ctl
+/dist/
+/*.tar.gz
+/*.rpm
+/*.deb

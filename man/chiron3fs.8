@@ -1,6 +1,6 @@
 .\" Copyright (c) 2007-2008 Luis Otavio de Colla Furquim
 .\" This file may be copied under the terms of the GPLv3 included in this package and also found at its original location http://www.gnu.org/licenses/gpl-3.0.html
-.TH "ChironFS" "8" "1.1" "Luis Otavio de Colla Furquim" "Kernel/Filesystems"
+.TH "chiron3fs" "8" "3.0.0" "steigr" "Kernel/Filesystems"
 .SH "NAME"
 ChironFS \- Chiron Filesystem is a fault-tolerant replication file system.
 .SH "SYNOPSIS"
@@ -99,8 +99,43 @@ its priority.
 .RE
 .fi
 .pp
+.SH "INTEGRATION"
+.TP
+.B "/etc/fstab"
+Use the replica list as a FUSE source prefixed with "chiron3fs#":
+.PP
+.nf
+.RS
+chiron3fs#/srv/chiron/r1=/srv/chiron/r2 /srv/chiron/mnt fuse defaults,allow_other,log=/var/log/chiron3fs.log 0 0
+.RE
+.fi
+.TP
+.B "systemd"
+Example service unit:
+.PP
+.nf
+.RS
+[Unit]
+Description=chiron3fs replicated facade mount
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/chiron3fs -f /srv/chiron/r1=/srv/chiron/r2 /srv/chiron/mnt
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+.RE
+.fi
 .SH "SEE ALSO"
 mount.fuse(8), fusermount(1), rsync(1), heartbeat at http://linux\-ha.org/Heartbeat.
+.SH "PROJECT"
+Repository: https://github.com/steigr/chiron3fs
+.br
+Issues: https://github.com/steigr/chiron3fs/issues
+.SH "MAINTAINER"
+steigr <chiron3fs@stei.gr>
 .SH "AUTHORS"
 The ChironFS replication Filesystem was created by Luis Otavio de Colla Furquim.
 .br

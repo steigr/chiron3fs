@@ -1,0 +1,13 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: chiron3fs
+Source: https://github.com/steigr/chiron3fs
+
+Files: *
+Copyright: 2005-2008 Luis Furquim, 2015 Thiebaud Weksteen
+License: GPL-3.0-only
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License version 3.
+ .
+ On Debian systems, the full text of the GNU General Public License
+ version 3 can be found in /usr/share/common-licenses/GPL-3.
+

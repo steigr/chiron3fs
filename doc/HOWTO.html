@@ -18,7 +18,8 @@
 <P STYLE="margin-left: 1.06cm">b) <A HREF='#test'>Testing Chiron FS</A></P>
 <P>2. <A HREF='#using'>Using Chiron FS</A></P>
 <P>3. <A HREF='#fstab'>Putting in fstab</A></P>
-<P>4. <A HREF='#examples'>Some Examples</A></P>
+<P>4. <A HREF='#systemd'>Systemd integration</A></P>
+<P>5. <A HREF='#examples'>Some Examples</A></P>
 <P STYLE="margin-left: 1.06cm">a) <A HREF='#srv'>File and web servers</A></P>
 <P STYLE="margin-left: 2.12cm">i) <A HREF='#net'>Network storage</A></P>
 <P STYLE="margin-left: 2.12cm">ii) <A HREF='#local'>Local storage</A></P>
@@ -54,7 +55,7 @@ SUCH USE IS ILEGAL!</P>
 <H2 LANG="en">a) Obtaining and Installing Chiron FS 
 </H2>
 <P LANG="en"><A NAME="install2"></A>
-You may download ChironFS from <a href="http://code.google.com/p/chiron3fs/downloads/list">Google Code</a>.
+You may download ChironFS from <a href="https://github.com/steigr/chiron3fs/releases/latest">GitHub Releases</a>.
 There are some choices there:
 <ul class='stdlist' style='margin-left: 3em;'>
  <li>Source code, both as a tarball or RPM format;</li>
@@ -70,7 +71,7 @@ have to make sure that your system have FUSE installed, BOTH BINARY and
 DEVELOPMENT files. If you have a recent distribution you probably
 have it installed or can do it with few commands like apt-get, yum,
 yast, etc. If you don't have it you may download it from its 
-<a href="http://fuse.sourceforge.net">site</a>. 
+<a href="https://github.com/libfuse/libfuse">project site</a>.
 </P>
 <P LANG="en">Unpack it wherever you want and you will have a
 directory named chiron3fs-&lt;current_version&gt;.</P>
@@ -212,7 +213,29 @@ allow_other,log=/var/log/chiron3fs.log 0 0</P>
 </div>
 <P><BR><BR>
 </P>
-<H2>Chapter 4. Some Examples</H2><A NAME="examples"></A>
+<H2>Chapter 4. Systemd integration</H2><A NAME="systemd"></A>
+<P>To manage chiron3fs with systemd, create a service unit like:</P>
+<div class='codebox'>
+<P>[Unit]</P>
+<P>Description=chiron3fs replicated facade mount</P>
+<P>After=network.target</P>
+<P></P>
+<P>[Service]</P>
+<P>Type=simple</P>
+<P>ExecStart=/usr/bin/chiron3fs -f /real1=/real2 /virtual</P>
+<P>Restart=on-failure</P>
+<P></P>
+<P>[Install]</P>
+<P>WantedBy=multi-user.target</P>
+</div>
+<P>Then run:</P>
+<div class='codebox'>
+<P>systemctl daemon-reload</P>
+<P>systemctl enable --now chiron3fs.service</P>
+</div>
+<P><BR><BR>
+</P>
+<H2>Chapter 5. Some Examples</H2><A NAME="examples"></A>
 <P><BR><BR>
 </P>
 <P>So let's see some real world examples:</P>
@@ -612,8 +635,8 @@ reserved to be used by ChironFS like, for example, the log file.
 <P>As we are starting to publish this system, many things still have
 to be done. This software is provide AS IS and so, mail me (put
 "[CHIRONFS]" in the subject) and I will TRY to do my best to
-support you. Now there is a <a href="http://groups.google.com/group/chiron3fs-forum"
->discussion list</a>, so users now have this way to solve their problems too.</P>
+support you. Please use the <a href="https://github.com/steigr/chiron3fs/issues">GitHub issue tracker</a>
+for bug reports and feature requests.</P>
 <P><BR><BR>
 </P>
 <H2></H2>

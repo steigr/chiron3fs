@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>chiron3fs</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="container">
+    <h1>chiron3fs</h1>
+    <p>Fault-tolerant replicated facade filesystem built on FUSE3.</p>
+
+    <section>
+      <h2>Links</h2>
+      <ul>
+        <li><a id="latest-release" href="https://github.com/steigr/chiron3fs/releases/latest">Latest release</a></li>
+        <li><a id="latest-changelog" href="https://github.com/steigr/chiron3fs/releases/latest">Latest release changelog</a></li>
+        <li><a href="https://github.com/steigr/chiron3fs">Source code</a></li>
+        <li><a href="https://github.com/steigr/chiron3fs/issues">Issues</a></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Install Packages</h2>
+      <p>Download artifacts from the latest release page and install:</p>
+      <pre><code># Debian/Ubuntu
+sudo apt install ./chiron3fs_*.deb
+
+# Fedora
+sudo dnf install ./chiron3fs-*.rpm</code></pre>
+    </section>
+
+    <section>
+      <h2>Usage</h2>
+      <pre><code>mkdir -p /srv/chiron/r1 /srv/chiron/r2 /srv/chiron/mnt
+chiron3fs -f /srv/chiron/r1=/srv/chiron/r2 /srv/chiron/mnt</code></pre>
+    </section>
+
+    <section>
+      <h2>/etc/fstab integration</h2>
+      <p>Example entry:</p>
+      <pre><code>chiron3fs#/srv/chiron/r1=/srv/chiron/r2 /srv/chiron/mnt fuse defaults,allow_other,log=/var/log/chiron3fs.log 0 0</code></pre>
+    </section>
+
+    <section>
+      <h2>systemd integration</h2>
+      <p>Example service unit:</p>
+      <pre><code>[Unit]
+Description=chiron3fs mount
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/chiron3fs -f /srv/chiron/r1=/srv/chiron/r2 /srv/chiron/mnt
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target</code></pre>
+    </section>
+
+    <section>
+      <h2>Build From Source</h2>
+      <pre><code>autoreconf -fi
+./configure
+make -j"$(nproc)"
+make check</code></pre>
+    </section>
+  </main>
+
+  <script>
+    // Resolve latest release and expose direct links for release and changelog.
+    fetch("https://api.github.com/repos/steigr/chiron3fs/releases/latest")
+      .then((resp) => resp.ok ? resp.json() : null)
+      .then((release) => {
+        if (!release || !release.html_url) return;
+        const latest = document.getElementById("latest-release");
+        const changelog = document.getElementById("latest-changelog");
+        latest.href = release.html_url;
+        latest.textContent = "Latest release (" + release.tag_name + ")";
+        changelog.href = release.html_url;
+      })
+      .catch(() => {});
+  </script>
+</body>
+</html>
+

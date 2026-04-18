@@ -1,0 +1,9 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@
+
+override_dh_auto_test:
+	# Integration tests require FUSE mount capabilities not available in package builders.
+	:
+
