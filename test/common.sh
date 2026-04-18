@@ -1,10 +1,10 @@
 #!/bin/sh
 
-chironfs_pid=0
+chiron3fs_pid=0
 
 clean_up() {
-  if [ "$chironfs_pid" -ne 0 ]; then
-    kill "$chironfs_pid" 2>/dev/null || true
+  if [ "$chiron3fs_pid" -ne 0 ]; then
+    kill "$chiron3fs_pid" 2>/dev/null || true
   fi
   if command -v fusermount3 >/dev/null 2>&1; then
     fusermount3 -u t3 2>/dev/null || true
@@ -25,8 +25,8 @@ create_test_directories() {
 
 start_chiron() {
   ../src/chiron3fs -f --log ./test.log t1=t2 t3 &
-  chironfs_pid=$!
-  echo "Chiron3FS pid is $chironfs_pid"
+  chiron3fs_pid=$!
+  echo "Chiron3FS pid is $chiron3fs_pid"
   sleep 1
 }
 

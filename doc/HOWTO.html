@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
-<link rel='stylesheet' type='text/css' href='chironfs.css' media='screen' />
+<link rel='stylesheet' type='text/css' href='chiron3fs.css' media='screen' />
 </head>
 <body>
 <div class='stdtext'>
@@ -54,7 +54,7 @@ SUCH USE IS ILEGAL!</P>
 <H2 LANG="en">a) Obtaining and Installing Chiron FS 
 </H2>
 <P LANG="en"><A NAME="install2"></A>
-You may download ChironFS from <a href="http://code.google.com/p/chironfs/downloads/list">Google Code</a>.
+You may download ChironFS from <a href="http://code.google.com/p/chiron3fs/downloads/list">Google Code</a>.
 There are some choices there:
 <ul class='stdlist' style='margin-left: 3em;'>
  <li>Source code, both as a tarball or RPM format;</li>
@@ -65,7 +65,7 @@ There are some choices there:
    </ul>
  </li>
 </ul>
-For the tarball, named chironfs-&lt;current_version&gt;.tar.gz, you will 
+For the tarball, named chiron3fs-&lt;current_version&gt;.tar.gz, you will 
 have to make sure that your system have FUSE installed, BOTH BINARY and
 DEVELOPMENT files. If you have a recent distribution you probably
 have it installed or can do it with few commands like apt-get, yum,
@@ -73,11 +73,11 @@ yast, etc. If you don't have it you may download it from its
 <a href="http://fuse.sourceforge.net">site</a>. 
 </P>
 <P LANG="en">Unpack it wherever you want and you will have a
-directory named chironfs-&lt;current_version&gt;.</P>
+directory named chiron3fs-&lt;current_version&gt;.</P>
 <P LANG="en">Just enter the directory and compile it with the
 commands:</P>
 <div class='codebox'>
-<P LANG="en">cd /path/to/source/chironfs-&lt;current_version&gt; 
+<P LANG="en">cd /path/to/source/chiron3fs-&lt;current_version&gt; 
 </P>
 <P LANG="en">./configure [any configure options you want]</P>
 <P LANG="en">make</P>
@@ -87,21 +87,21 @@ commands:</P>
 For the source in RPM format, just type:
 <div class='codebox'>
 <P LANG="en">
-rpmbuild -ba chironfs-&lt;current_version&gt;.src.rpm
+rpmbuild -ba chiron3fs-&lt;current_version&gt;.src.rpm
 </P>
 </div>
-and this will compile ChironFS, generating a chironfs-&lt;current_version&gt;&lt;your_architecture&gt;.rpm.
+and this will compile ChironFS, generating a chiron3fs-&lt;current_version&gt;&lt;your_architecture&gt;.rpm.
 Then you may install it with this command:
 <div class='codebox'>
 <P LANG="en">
-rpm -i chironfs-&lt;current_version&gt;-&lt;your_architecture&gt;.rpm
+rpm -i chiron3fs-&lt;current_version&gt;-&lt;your_architecture&gt;.rpm
 </P>
 </div>
 <P LANG="en">
 For the binaries in RPM format, just type:
 <div class='codebox'>
 <P LANG="en">
-rpm -i chironfs-&lt;current_version&gt;-&lt;architecture&gt;.rpm
+rpm -i chiron3fs-&lt;current_version&gt;-&lt;architecture&gt;.rpm
 </P>
 </div>
 </P>
@@ -109,7 +109,7 @@ rpm -i chironfs-&lt;current_version&gt;-&lt;architecture&gt;.rpm
 For the binaries in DEB format, just type:
 <div class='codebox'>
 <P LANG="en">
-dpkg -i chironfs_&lt;current_version&gt;_&lt;architecture&gt;.deb
+dpkg -i chiron3fs_&lt;current_version&gt;_&lt;architecture&gt;.deb
 </P>
 </div>
 </P>
@@ -122,7 +122,7 @@ dpkg -i chironfs_&lt;current_version&gt;_&lt;architecture&gt;.deb
 the replicas and do the mount with the commands;</P>
 <div class='codebox'>
 <P>mkdir /virtual /real1 /real2</P>
-<P>chironfs /real1=/real2 /virtual</P>
+<P>chiron3fs /real1=/real2 /virtual</P>
 </div>
 <P>Confirm they are correctly mounted with the command:<BR><BR><BR>
 </P>
@@ -167,12 +167,12 @@ activate the logs! <BR><BR><BR>
 <P>So, the example above should get better if we change the mount
 command to this:</P>
 <div class='codebox'>
-<P>chironfs --fuseoptions allow_other --log /var/log/chironfs.log
+<P>chiron3fs --fuseoptions allow_other --log /var/log/chiron3fs.log
 /real1=/real2 /virtual</P>
 </div>
 <P>If you want more replicas, 3 for example, type:
 <div class='codebox'>
-<P>chironfs --fuseoptions allow_other --log /var/log/chironfs.log
+<P>chiron3fs --fuseoptions allow_other --log /var/log/chiron3fs.log
 /real1=/real2=/real3 /virtual</P>
 </div>
 </P>
@@ -187,7 +187,7 @@ to avoid this, give a low priority to real2 and ChironFS will
 read from it only if /real1 AND /real3 fails. To make this, type
 a colon just before the /real2 path:
 <div class='codebox'>
-<P>chironfs --fuseoptions allow_other --log /var/log/chironfs.log
+<P>chiron3fs --fuseoptions allow_other --log /var/log/chiron3fs.log
 /real1=<span style="font-weight: bolder; font-size: 14px;">:</span>/real2=/real3 /virtual</P>
 </div>
 </P>
@@ -198,17 +198,17 @@ a colon just before the /real2 path:
 <H2>Chapter 3. Putting in fstab</H2><A NAME="fstab"></A>
 <P>So, to mount it automatically at boot time, simply add lines to
 your /etc/fstab file as shown in the example below. The first column
-must start with "chironfs#" followed, without spaces, by the list
+must start with "chiron3fs#" followed, without spaces, by the list
 of replicas separated by equal signs. The second column is you mount
 point. The third column must be "fuse". The fourth column are the
-fuse and chironfs options separated by colons. The last two columns
+fuse and chiron3fs options separated by colons. The last two columns
 are fstab options and works just as you can see in the fstab
 documentation.</P>
 <P><BR><BR>
 </P>
 <div class='codebox'>
-<P>chironfs#/real1=/real2 /virtual fuse
-allow_other,log=/var/log/chironfs.log 0 0</P>
+<P>chiron3fs#/real1=/real2 /virtual fuse
+allow_other,log=/var/log/chiron3fs.log 0 0</P>
 </div>
 <P><BR><BR>
 </P>
@@ -248,8 +248,8 @@ lines:</FONT></P>
 <div class='codebox'>
 <P>nfs1:/data /real1 nfs auto 0 0</P>
 <P>nfs2:/data /real2 nfs auto 0 0</P>
-<P>chironfs#/real1=/real2 /virtual fuse
-allow_other,log=/var/log/chironfs.log 0 0</P>
+<P>chiron3fs#/real1=/real2 /virtual fuse
+allow_other,log=/var/log/chiron3fs.log 0 0</P>
 </div>
 <P><BR><BR>
 </P>
@@ -292,8 +292,8 @@ adding these 2 lines:</FONT></P>
 </P>
 <div class='codebox'>
 <P>webserver:/real1 /real1 nfs auto 0 0</P>
-<P>chironfs#/real2=<span style="font-weight: bolder; font-size: 14px;">:</span>/real1 /virtual fuse
-allow_other,log=/var/log/chironfs.log 0 0</P>
+<P>chiron3fs#/real2=<span style="font-weight: bolder; font-size: 14px;">:</span>/real1 /virtual fuse
+allow_other,log=/var/log/chiron3fs.log 0 0</P>
 </div>
 <P><BR><BR>
 </P>
@@ -303,8 +303,8 @@ these 2 lines:</FONT></P>
 </P>
 <div class='codebox'>
 <P>fileserver:/real2 /real2 nfs auto 0 0</P>
-<P>chironfs#/real1=<span style="font-weight: bolder; font-size: 14px;">:</span>/real2 /virtual fuse
-allow_other,log=/var/log/chironfs.log 0 0</P>
+<P>chiron3fs#/real1=<span style="font-weight: bolder; font-size: 14px;">:</span>/real2 /virtual fuse
+allow_other,log=/var/log/chiron3fs.log 0 0</P>
 </div>
 <P><BR><BR>
 </P>
@@ -346,8 +346,8 @@ lines:</FONT></P>
 <div class='codebox'>
 <P>nfs1:/data /real1 nfs auto 0 0</P>
 <P>nfs2:/data /real2 nfs auto 0 0</P>
-<P>chironfs#/real3=<span style="font-weight: bolder; font-size: 14px;">:</span>/real2=<span style="font-weight: bolder; font-size: 14px;">:</span>/real1 /virtual fuse
-allow_other,log=/var/log/chironfs.log 0 0</P>
+<P>chiron3fs#/real3=<span style="font-weight: bolder; font-size: 14px;">:</span>/real2=<span style="font-weight: bolder; font-size: 14px;">:</span>/real1 /virtual fuse
+allow_other,log=/var/log/chiron3fs.log 0 0</P>
 </div>
 <P><BR><BR>
 </P>
@@ -395,8 +395,8 @@ and virtual filesystems in each of the users's servers:</FONT></P>
 </P>
 <div class='codebox'>
 <P>nfs1:/data /real1 nfs auto 0 0</P>
-<P>chironfs#<span style="font-weight: bolder; font-size: 14px;">:</span>/real1=/real2 /virtual fuse
-allow_other,log=/var/log/chironfs.log 0 0</P>
+<P>chiron3fs#<span style="font-weight: bolder; font-size: 14px;">:</span>/real1=/real2 /virtual fuse
+allow_other,log=/var/log/chiron3fs.log 0 0</P>
 </div>
 <P><BR><BR>
 </P>
@@ -409,15 +409,15 @@ ulimit considerations</a></FONT></P>
 <H2>Chapter 5. Replica Failures</H2><A NAME="fail"></A>
 <P><BR><BR>
 </P>
-<P LANG="en"><FONT SIZE=3>Anytime some of your replica fails chironfs
+<P LANG="en"><FONT SIZE=3>Anytime some of your replica fails chiron3fs
 attempts to keep your systems running. If the fail occurs during a
-read operation, chironfs tries to read from some other replica and in
+read operation, chiron3fs tries to read from some other replica and in
 case of success, returns to the caller with no error. In this case,
-chironfs logs the event if you mounted with the recommended --log
-option. If the fail occurs during a write operation, chironfs
+chiron3fs logs the event if you mounted with the recommended --log
+option. If the fail occurs during a write operation, chiron3fs
 continues trying to write in the other replicas. If at least one of
-the replicas succeeds in the write, chironfs returns to the caller
-with no error. But this time, chironfs logs the event AND disable the
+the replicas succeeds in the write, chiron3fs returns to the caller
+with no error. But this time, chiron3fs logs the event AND disable the
 failed replicas. It means that no further reads or writes will be
 made from or to it.</FONT></P><BR><BR>
 <P LANG="en"><FONT SIZE=3>At this point, you have to make your monitor
@@ -431,7 +431,7 @@ replica path with the slashes changed to underscores. Each one of them
 contain two files: the first is named "status" and contains a number "0"
 for replicas in good state or a number "2" if the replica is disabled 
 and the data is inconsistent. By echoing "0" or "2" in this file you 
-enable or disable the replica. The second file, named "check_chironfs.sh",
+enable or disable the replica. The second file, named "check_chiron3fs.sh",
 is a script intended to run as a nagios plugin. If you want to use it, do
 not copy it to another path, because its contents change dynamically and
 it will not work in another path. So, suppose your fstab is something
@@ -440,15 +440,15 @@ like:</FONT></P>
 </P>
 <div class='codebox'>
 <P>nfs1:/data /real1 nfs auto 0 0</P>
-<P>chironfs#<span style="font-weight: bolder; font-size: 14px;">:</span>/real1=/real2 /virtual fuse
-allow_other,log=/var/log/chironfs.log,ctl=/var/run/chironctl 0 0</P>
+<P>chiron3fs#<span style="font-weight: bolder; font-size: 14px;">:</span>/real1=/real2 /virtual fuse
+allow_other,log=/var/log/chiron3fs.log,ctl=/var/run/chiron3ctl 0 0</P>
 </div>
 <P><BR><BR>
 </P>
 <P LANG="en"><FONT SIZE=3>If you want to monitor your replicas with
 nagios, just tell nagios to run the scripts located at
-"/var/run/chironctl/_real1/check_chironfs.sh" and
-"/var/run/chironctl/_real2/check_chironfs.sh".</FONT></P>
+"/var/run/chiron3ctl/_real1/check_chiron3fs.sh" and
+"/var/run/chiron3ctl/_real2/check_chiron3fs.sh".</FONT></P>
 <P><BR><BR>
 </P>
 <P LANG="en"><FONT SIZE=3>You cannot change ownership or permission bits
@@ -467,7 +467,7 @@ procedure, supposing your fstab is the same as above and the failed (and
 disabled) replica is /real2, use the control filesystem to enable it again
 as below:</FONT></P><BR><BR>
 <div class='codebox'>
-<P>echo 0 &gt; /var/run/chironctl/_real2/status</P>
+<P>echo 0 &gt; /var/run/chiron3ctl/_real2/status</P>
 </div>
 <P><BR><BR>
 </P>
@@ -612,7 +612,7 @@ reserved to be used by ChironFS like, for example, the log file.
 <P>As we are starting to publish this system, many things still have
 to be done. This software is provide AS IS and so, mail me (put
 "[CHIRONFS]" in the subject) and I will TRY to do my best to
-support you. Now there is a <a href="http://groups.google.com/group/chironfs-forum"
+support you. Now there is a <a href="http://groups.google.com/group/chiron3fs-forum"
 >discussion list</a>, so users now have this way to solve their problems too.</P>
 <P><BR><BR>
 </P>

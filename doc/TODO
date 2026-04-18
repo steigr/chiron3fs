@@ -18,7 +18,7 @@
     disabled log message raises the alarm in a "dead
     canary" way
 * Make more tests specially in case of failure detection.
-* /chironctl pseudo file to manage chironfs in runtime
+* /chiron3ctl pseudo file to manage chiron3fs in runtime
   file attribs define who can manage
 * make statistics
 * better load balance algorithm using the statistics to

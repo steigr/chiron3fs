@@ -1,6 +1,6 @@
 # chiron3fs
 
-`chiron3fs` is a FUSE3 port of the original `chironfs` replicated filesystem.
+`chiron3fs` is a FUSE3 port of the original replicated filesystem project.
 
 It mirrors writes to multiple replica directories and reads from healthy replicas,
 with optional low-priority replicas prefixed by `:` in the replica list.

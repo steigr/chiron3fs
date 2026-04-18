@@ -29,7 +29,7 @@ for each replica, containing two files: the first is named "status" and
 contains a number "0" for replicas in good state or a number "2" if the
 replica is disabled and the data is inconsistent. By echoing "0" or "2" in
 this file you enable or disable the replica. The second file, named
-"check_chironfs.sh", is a script intended to run as a nagios plugin. If you
+"check_chiron3fs.sh", is a script intended to run as a nagios plugin. If you
 want to use it, do not copy it to another path, because its contents change
 dynamically and it will not work in another path. You cannot change ownership
 or permission bits on any of the files/directories in this filesystem. To

@@ -23,7 +23,7 @@ News
     * August 19, 2007
       Bug report on 1.0RC1 version
       Jason Haar submited the following bug report:
-      "I've just installed chironfs and noticed that /var/log/chironfs.log is '777'. 
+      "I've just installed chiron3fs and noticed that /var/log/chiron3fs.log is '777'. 
       You probably didn't mean it to be like that :-)"
     * August 19, 2007
       Release of the 1.0RC1 version
