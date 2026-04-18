@@ -32,7 +32,9 @@ struct chiron3fs_config config = {
 	.tab_fd = { NULL, 0 },
 	.uid = 0,
 	.gid = 0,
-	.fd_buf_size = 1
+	.fd_buf_size = 1,
+	.feature_set_mismatch = CHIRON_FEAT_MISMATCH_STRICT,
+	.replica_common_features = 0,
 };
 
 struct chiron3fs_options options;
@@ -43,6 +45,8 @@ static struct fuse_opt chiron3fs_opts[] = {
 	CHIRON_OPT("-l %s",	       logname, 0),
 	CHIRON_OPT("--quiet",	       quiet, 1),
 	CHIRON_OPT("-q",	       quiet, 1),
+	CHIRON_OPT("--feature-set-mismatch=%s", feature_set_mismatch, 0),
+	CHIRON_OPT("feature-set-mismatch=%s",   feature_set_mismatch, 0),
 
 	FUSE_OPT_KEY("-V",             KEY_VERSION),
 	FUSE_OPT_KEY("--version",      KEY_VERSION),
@@ -1743,6 +1747,17 @@ void help(void)
 "    -c SOCKET_PATH, --ctl SOCKET_PATH\n"
 "        Create a UNIX socket to control the filesystem. This socket may be\n"
 "        used by chiron3ctl to gather information on the filesystem\n"
+"    --feature-set-mismatch=MODE\n"
+"        Controls behaviour when replicas support different filesystem features\n"
+"        (e.g. one supports symlinks and the other does not).  MODE is one of:\n"
+"          strict        Refuse to mount. (default)\n"
+"          ignore        Mount anyway; replicas that fail an operation will be\n"
+"                        disabled at runtime as usual.\n"
+"          compatibility Mount and permanently disable FUSE operations not\n"
+"                        supported by every replica, returning ENOSYS to callers\n"
+"                        instead of silently degrading replication.\n"
+"        Can also be passed as a FUSE -o option:\n"
+"          -o feature-set-mismatch=compatibility\n"
 "    -h, --help            print this help\n"
 "    -l FILE, --log FILE   set a log filename\n"
 "    -q, --quiet           do not print error messages\n"
@@ -1750,7 +1765,7 @@ void help(void)
 "\n");
 }
 
-static struct fuse_operations chiron_oper = {
+struct fuse_operations chiron_oper = {
     .destroy      = NULL,
     .init         = chiron_init,
     .getattr      = chiron_getattr,
@@ -1873,6 +1888,55 @@ int main(int argc, char *argv[])
 	}
 
 	do_mount(options.replica_args, options.mountpoint);
+
+	/* Parse feature-set-mismatch policy */
+	config.feature_set_mismatch = CHIRON_FEAT_MISMATCH_STRICT;
+	if (options.feature_set_mismatch) {
+		if (strcmp(options.feature_set_mismatch, "ignore") == 0) {
+			config.feature_set_mismatch = CHIRON_FEAT_MISMATCH_IGNORE;
+		} else if (strcmp(options.feature_set_mismatch, "compatibility") == 0) {
+			config.feature_set_mismatch = CHIRON_FEAT_MISMATCH_COMPAT;
+		} else if (strcmp(options.feature_set_mismatch, "strict") == 0) {
+			config.feature_set_mismatch = CHIRON_FEAT_MISMATCH_STRICT;
+		} else {
+			fprintf(stderr,
+				"chiron3fs: invalid value for feature-set-mismatch: '%s'\n"
+				"  valid values: strict, ignore, compatibility\n",
+				options.feature_set_mismatch);
+			exit(1);
+		}
+	}
+
+	/* Probe replicas and enforce feature-set policy */
+	if (probe_replica_feature_sets() != 0)
+		exit(1);
+
+	/*
+	 * Compatibility mode: null out FUSE operation handlers for features
+	 * that are not universally supported across all replicas.  Callers
+	 * will receive ENOSYS for those operations instead of having replicas
+	 * silently disabled mid-session.
+	 */
+	if (config.feature_set_mismatch == CHIRON_FEAT_MISMATCH_COMPAT) {
+		uint64_t c = config.replica_common_features;
+		if (!(c & CHIRON_FEAT_SYMLINK)) {
+			chiron_oper.symlink  = NULL;
+			chiron_oper.readlink = NULL;
+		}
+		if (!(c & CHIRON_FEAT_HARDLINK))
+			chiron_oper.link = NULL;
+		if (!(c & CHIRON_FEAT_CHMOD))
+			chiron_oper.chmod = NULL;
+		if (!(c & CHIRON_FEAT_UTIMENS))
+			chiron_oper.utimens = NULL;
+		/*
+		 * mknod also handles regular files, so we cannot disable it
+		 * entirely just because FIFOs are unsupported.  The FIFO
+		 * branch inside chiron_mknod will naturally fail on replicas
+		 * that do not support it, disabling them there.
+		 */
+	}
+
 	res = fuse_main(args.argc, args.argv, &chiron_oper, NULL);
 
 	return res;

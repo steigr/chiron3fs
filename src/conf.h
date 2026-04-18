@@ -41,6 +41,7 @@
 
 
 int do_mount(char *filesystems, char *mountpoint);
+int probe_replica_feature_sets(void);
 void dump_config(void);
 
 #endif /* CHIRON3FS_CONF_H */

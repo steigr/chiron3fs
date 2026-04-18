@@ -33,6 +33,7 @@ typedef struct {
    size_t  pathlen;
    int     disabled;
    int     priority;
+   uint64_t feature_mask;
 } replica_t;
 
 /*

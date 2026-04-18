@@ -64,6 +64,31 @@
 #include "hash.h"
 
 /*
+ * Feature bits used for startup probing of replica capabilities.
+ */
+#define CHIRON_FEAT_CREATE   (1ULL << 0)  /* create/unlink regular file */
+#define CHIRON_FEAT_SYMLINK  (1ULL << 1)  /* symlink + readlink */
+#define CHIRON_FEAT_HARDLINK (1ULL << 2)  /* hard link (link()) */
+#define CHIRON_FEAT_CHMOD    (1ULL << 3)  /* chmod with mode verification */
+#define CHIRON_FEAT_UTIMENS  (1ULL << 4)  /* utimensat */
+#define CHIRON_FEAT_FIFO     (1ULL << 5)  /* mkfifo */
+
+/*
+ * Values for feature_set_mismatch in chiron3fs_config.
+ *
+ * STRICT       (0) — default: refuse to mount when replicas differ.
+ * IGNORE       (1) — mount anyway; diverging replicas will be disabled
+ *                    at runtime as today.
+ * COMPAT       (2) — mount, but permanently disable FUSE operations that
+ *                    are not supported by every replica, so that
+ *                    unsupported features return ENOSYS rather than
+ *                    silently disabling a replica later.
+ */
+#define CHIRON_FEAT_MISMATCH_STRICT 0
+#define CHIRON_FEAT_MISMATCH_IGNORE 1
+#define CHIRON_FEAT_MISMATCH_COMPAT 2
+
+/*
  * Main configuration structure for ChironFS.
  */
 struct chiron3fs_config {
@@ -81,6 +106,8 @@ struct chiron3fs_config {
 	uid_t	     uid;
 	gid_t        gid;
 	uint64_t     fd_buf_size;
+	int          feature_set_mismatch;     /* one of CHIRON_FEAT_MISMATCH_* */
+	uint64_t     replica_common_features;  /* intersection of all replica masks */
 };
 
 extern struct chiron3fs_config config;
@@ -95,6 +122,7 @@ struct chiron3fs_options {
 	char *replica_args;
 	char *logname;
 	char *mountpoint;
+	char *feature_set_mismatch;
 	int  quiet;
 };
 

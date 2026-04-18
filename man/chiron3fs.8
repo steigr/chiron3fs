@@ -46,6 +46,32 @@ Run in foreground.
 .B "\-h, \-\-help"
 Prints the help
 .TP
+.B "\-\-feature\-set\-mismatch=\fIMODE\fR"
+Controls behaviour when replicas expose different filesystem feature sets
+(detected by a startup probe that tests symlink, hardlink, chmod, utimens, and
+FIFO creation on each replica root).
+.I MODE
+is one of:
+.RS
+.TP
+.B strict
+Refuse to mount if any feature-set mismatch is found. \fB(default)\fR
+.TP
+.B ignore
+Mount without restrictions.  Replicas that fail an operation at runtime will be
+disabled as usual.
+.TP
+.B compatibility
+Mount and permanently disable FUSE operations that are not supported by every
+replica.  Unsupported operations return \fBENOSYS\fR to callers rather than
+silently degrading replication.  Affected operations: \fBsymlink\fR,
+\fBreadlink\fR, \fBlink\fR (hardlink), \fBchmod\fR, \fButimens\fR.
+.RE
+.br
+The option may also be passed as a FUSE \-o option:
+.br
+\fB    \-o feature\-set\-mismatch=compatibility\fR
+.TP
 .B "\-l FILE, \-\-log FILE"
 Sets a log filename. If you don't set it, no log will be done at all.
 .TP
