@@ -3,7 +3,7 @@
 AC_PREREQ(2.61)
 AC_INIT([chiron3fs], [3.0.0], [luisfurquim@gmail.com])
 AC_CONFIG_SRCDIR([src/common.h])
-AC_CONFIG_HEADER([config.h])
+AC_CONFIG_HEADERS([config.h])
 AM_INIT_AUTOMAKE
 
 # Checks for programs.
@@ -16,7 +16,6 @@ PKG_CHECK_MODULES([FUSE], [fuse3 >= 3.0])
 
 # Checks for header files.
 AC_HEADER_DIRENT
-AC_HEADER_STDC
 AC_CHECK_HEADERS([fcntl.h limits.h mntent.h stdint.h stdlib.h string.h sys/mount.h sys/param.h sys/statvfs.h sys/time.h unistd.h ad.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
@@ -30,7 +29,6 @@ AC_TYPE_SIZE_T
 AC_TYPE_SSIZE_T
 AC_CHECK_MEMBERS([struct stat.st_blksize])
 AC_STRUCT_ST_BLOCKS
-AC_HEADER_TIME
 AC_STRUCT_TM
 AC_TYPE_UINT32_T
 AC_TYPE_UINT64_T
