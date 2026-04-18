@@ -1,3 +1,8 @@
+chiron3fs (3.0.3-1) unstable; urgency=medium
+
+  * Version bump to 3.0.3
+
+ -- steigr <chiron3fs@stei.gr>  Sat, 18 Apr 2026 16:35:43 +0000
 chiron3fs (3.0.2-1) unstable; urgency=medium
 
   * Version bump to 3.0.2
