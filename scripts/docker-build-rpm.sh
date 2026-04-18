@@ -5,6 +5,7 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 DOCKER_PLATFORM="${DOCKER_PLATFORM:-}"
 ARCH="${ARCH:-}"
 RPM_TARGET="${RPM_TARGET:-}"
+RPM_IMAGE="${RPM_IMAGE:-fedora:43}"
 
 docker_args=(run --rm)
 if [[ -n "$DOCKER_PLATFORM" ]]; then
@@ -15,7 +16,7 @@ fi
 docker "${docker_args[@]}" \
   -v "$ROOT_DIR:/work" \
   -w /work \
-  fedora:40 \
+  "$RPM_IMAGE" \
   bash -lc '
     set -euo pipefail
     dnf -y install \
@@ -37,4 +38,3 @@ docker "${docker_args[@]}" \
 
     ARCH="'$ARCH'" RPM_TARGET="'$RPM_TARGET'" ./scripts/build-rpm.sh
   '
-

@@ -4,7 +4,7 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 DOCKER_PLATFORM="${DOCKER_PLATFORM:-}"
 ARCH="${ARCH:-}"
-DEB_IMAGE="${DEB_IMAGE:-ubuntu:24.04}"
+DEB_IMAGE="${DEB_IMAGE:-ubuntu:26.04}"
 DEB_FLAVOR="${DEB_FLAVOR:-}"
 
 docker_args=(run --rm)
@@ -32,4 +32,3 @@ docker "${docker_args[@]}" \
       pkg-config
     ARCH="'$ARCH'" DEB_FLAVOR="'$DEB_FLAVOR'" ./scripts/build-deb.sh
   '
-
