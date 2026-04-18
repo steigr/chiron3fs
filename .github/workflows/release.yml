@@ -31,10 +31,6 @@ jobs:
         include:
           - flavor: ubuntu
             image: ubuntu:24.04
-            arch: i386
-            platform: linux/386
-          - flavor: ubuntu
-            image: ubuntu:24.04
             arch: amd64
             platform: linux/amd64
           - flavor: ubuntu
