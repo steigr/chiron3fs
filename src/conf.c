@@ -127,8 +127,8 @@ int do_mount(char *filesystems, char *mountpoint)
 	// Allocate config.tab_fd
 	config.tab_fd.fd = calloc(config.fd_buf_size,sizeof(int *));
 	if (!config.tab_fd.fd) {
-		print_err(CHIRONFS_ERR_LOW_MEMORY,"file descriptor hash table allocation");
-		exit(CHIRONFS_ERR_LOW_MEMORY);
+		print_err(CHIRON3FS_ERR_LOW_MEMORY,"file descriptor hash table allocation");
+		exit(CHIRON3FS_ERR_LOW_MEMORY);
 	}
 	for(i=0; i < config.fd_buf_size; i++) {
 		config.tab_fd.fd[i] = NULL;

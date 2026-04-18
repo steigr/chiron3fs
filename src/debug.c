@@ -38,7 +38,7 @@ void debug(const char *s, ...)
 	va_list ap;
 
 	va_start (ap, s);
-	fd  = fopen("/tmp/chironfs-dbg.txt","a");
+	fd  = fopen("/tmp/chiron3fs-dbg.txt","a");
 	vfprintf(fd, s, ap);
 	fclose(fd);
 	va_end (ap);
@@ -109,7 +109,7 @@ void _log(char *fnname, char *resource, int err)
 		strftime(tmstr,19,"%Y/%m/%d %H:%M ",ptm);
 		fputs(tmstr,logger.logfd);
 		fputs(fnname,logger.logfd);
-		if (err!=CHIRONFS_ADM_FORCED) {
+		if (err!=CHIRON3FS_ADM_FORCED) {
 			fputs(" failed accessing ",logger.logfd);
 		} else {
 			fputs(" ", logger.logfd);

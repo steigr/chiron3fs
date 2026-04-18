@@ -15,8 +15,8 @@
  *
  */
 
-#ifndef CHIRONFS_CTL_H
-#define CHIRONFS_CTL_H
+#ifndef CHIRON3FS_CTL_H
+#define CHIRON3FS_CTL_H
 
 #include "common.h"
 
@@ -29,4 +29,4 @@
 
 #include "fs.h"
 
-#endif /* CHIRONFS_CTL_H */
+#endif /* CHIRON3FS_CTL_H */

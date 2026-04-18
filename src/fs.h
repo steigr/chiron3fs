@@ -16,8 +16,8 @@
  *
  */
 
-#ifndef CHIRONFS_FS_H
-#define CHIRONFS_FS_H
+#ifndef CHIRON3FS_FS_H
+#define CHIRON3FS_FS_H
 
 
 #include "common.h"
@@ -66,7 +66,7 @@
 /*
  * Main configuration structure for ChironFS.
  */
-struct chironfs_config {
+struct chiron3fs_config {
 	unsigned int max_replica;
 	unsigned int max_replica_high;
 	unsigned int max_replica_low;
@@ -83,14 +83,14 @@ struct chironfs_config {
 	uint64_t     fd_buf_size;
 };
 
-extern struct chironfs_config config;
+extern struct chiron3fs_config config;
 
 /*
  * This structure is used to parse command line options using the
  * fuse_opt_parse wrapper. Its content is not used once initialisation
  * is finished.
  */
-struct chironfs_options {
+struct chiron3fs_options {
 	char *ctl_socket_name;
 	char *replica_args;
 	char *logname;
@@ -98,8 +98,8 @@ struct chironfs_options {
 	int  quiet;
 };
 
-extern struct chironfs_options options;
-#define CHIRON_OPT(t, p, v) { t, offsetof(struct chironfs_options, p), v }
+extern struct chiron3fs_options options;
+#define CHIRON_OPT(t, p, v) { t, offsetof(struct chiron3fs_options, p), v }
 enum {
 	KEY_HELP,
 	KEY_VERSION
@@ -129,4 +129,4 @@ void enable_replica(int n);
 void print_version(void);
 void *ctl_server(void *arg);
 
-#endif /* CHIRONFS_FS_H */
+#endif /* CHIRON3FS_FS_H */

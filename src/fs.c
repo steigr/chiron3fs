@@ -18,7 +18,7 @@
 
 #include "fs.h"
 
-struct chironfs_config config = {
+struct chiron3fs_config config = {
 	.max_replica = 0,
 	.max_replica_high = 0,
 	.max_replica_low = 0,
@@ -35,8 +35,8 @@ struct chironfs_config config = {
 	.fd_buf_size = 1
 };
 
-struct chironfs_options options;
-static struct fuse_opt chironfs_opts[] = {
+struct chiron3fs_options options;
+static struct fuse_opt chiron3fs_opts[] = {
 	CHIRON_OPT("--ctl %s",	       ctl_socket_name, 0),
 	CHIRON_OPT("-c %s",	       ctl_socket_name, 0),
 	CHIRON_OPT("--log %s",	       logname, 0),
@@ -104,7 +104,7 @@ int fd_hashseekfree(unsigned fd_ndx)
 	// the buffer to hold the file-max (the max opened
 	// file system-wide)
 	_log("hash allocation", "too many opened files", 0);
-	return(CHIRONFS_ERR_TOO_MANY_FOPENS);
+	return(CHIRON3FS_ERR_TOO_MANY_FOPENS);
 }
 
 int fd_hashset(int *fd)
@@ -1785,7 +1785,7 @@ static struct fuse_operations chiron_oper = {
 };
 
 
-static int chironfs_opt_proc(void *data, const char *arg, int key,
+static int chiron3fs_opt_proc(void *data, const char *arg, int key,
 			     struct fuse_args *outargs)
 {
 	switch(key) {
@@ -1831,8 +1831,8 @@ int main(int argc, char *argv[])
 
 	dbg("Starting\n");
 
-	if (fuse_opt_parse(&args, &options, chironfs_opts,
-			  chironfs_opt_proc) == -1)
+	if (fuse_opt_parse(&args, &options, chiron3fs_opts,
+			  chiron3fs_opt_proc) == -1)
 		exit(1);
 
 	//fuse_opt_add_arg(&args, "-o");

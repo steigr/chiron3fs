@@ -16,8 +16,8 @@
  *
  */
 
-#ifndef CHIRONFS_TYPES_H
-#define CHIRONFS_TYPES_H
+#ifndef CHIRON3FS_TYPES_H
+#define CHIRON3FS_TYPES_H
 
 #include <time.h>
 #include <sys/stat.h>
@@ -48,4 +48,4 @@ typedef struct {
    int  used;
 } fd_t;
 
-#endif /* CHIRONFS_TYPES_H */
+#endif /* CHIRON3FS_TYPES_H */

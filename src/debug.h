@@ -15,8 +15,8 @@
  *
  */
 
-#ifndef CHIRONFS_DEBUG_H
-#define CHIRONFS_DEBUG_H
+#ifndef CHIRON3FS_DEBUG_H
+#define CHIRON3FS_DEBUG_H
 
 #include "common.h"
 
@@ -56,4 +56,4 @@ void print_err(int, char *);
 void _log(char *, char *, int);
 void open_log(char *);
 
-#endif /* CHIRONFS_DEBUG_H */
+#endif /* CHIRON3FS_DEBUG_H */

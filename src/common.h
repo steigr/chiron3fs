@@ -16,8 +16,8 @@
  *
  */
 
-#ifndef CHIRONFS_COMMON_H
-#define CHIRONFS_COMMON_H
+#ifndef CHIRON3FS_COMMON_H
+#define CHIRON3FS_COMMON_H
 #include "config.h"
 
 #ifdef __linux__
@@ -29,12 +29,12 @@
 #include <fuse.h>
 #include <fuse_opt.h>
 
-#define CHIRONFS_ERR_LOW_MEMORY        -1
-#define CHIRONFS_ERR_LOG_ON_MOUNTPOINT -2
-#define CHIRONFS_ERR_BAD_OPTIONS       -3
-#define CHIRONFS_ERR_TOO_MANY_FOPENS   -4
-#define CHIRONFS_ERR_BAD_LOG_FILE      -5
-#define CHIRONFS_INVALID_PATH_MAX      -6
-#define CHIRONFS_ADM_FORCED            -7
+#define CHIRON3FS_ERR_LOW_MEMORY        -1
+#define CHIRON3FS_ERR_LOG_ON_MOUNTPOINT -2
+#define CHIRON3FS_ERR_BAD_OPTIONS       -3
+#define CHIRON3FS_ERR_TOO_MANY_FOPENS   -4
+#define CHIRON3FS_ERR_BAD_LOG_FILE      -5
+#define CHIRON3FS_INVALID_PATH_MAX      -6
+#define CHIRON3FS_ADM_FORCED            -7
 
-#endif /* CHIRONFS_COMMON_H */
+#endif /* CHIRON3FS_COMMON_H */

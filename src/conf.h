@@ -15,8 +15,8 @@
  *
  */
 
-#ifndef CHIRONFS_CONF_H
-#define CHIRONFS_CONF_H
+#ifndef CHIRON3FS_CONF_H
+#define CHIRON3FS_CONF_H
 
 #include "common.h"
 
@@ -43,4 +43,4 @@
 int do_mount(char *filesystems, char *mountpoint);
 void dump_config(void);
 
-#endif /* CHIRONFS_CONF_H */
+#endif /* CHIRON3FS_CONF_H */

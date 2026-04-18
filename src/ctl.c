@@ -171,11 +171,11 @@ unsigned int get_max_replica(int fd)
 
 void usage(void)
 {
-	fprintf(stderr, "usage: chironctl <control_socket>\n");
+	fprintf(stderr, "usage: chiron3ctl <control_socket>\n");
 	fprintf(stderr, "Argument:\n"
 	     "    control_socket\n"
 	     "        This is the control socket, created using the '-c'\n"
-	     "        option of chironfs\n"
+	     "        option of chiron3fs\n"
 	     "\n");
 }
 

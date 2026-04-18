@@ -15,10 +15,10 @@
  *
  */
 
-#ifndef CHIRONFS_UTILS_H
-#define CHIRONFS_UTILS_H
+#ifndef CHIRON3FS_UTILS_H
+#define CHIRON3FS_UTILS_H
 
 #define min(a,b) (((a) < (b)) ? (a) : (b))
 #define max(a,b) (((a) < (b)) ? (b) : (a))
 
-#endif /* CHIRONFS_UTILS_H */
+#endif /* CHIRON3FS_UTILS_H */
