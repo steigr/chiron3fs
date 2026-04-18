@@ -1,6 +1,6 @@
+chiron3fs (3.0.2-1) unstable; urgency=medium\n\n  * Version bump to 3.0.2\n\n -- steigr <chiron3fs@stei.gr>  Sat, 18 Apr 2026 18:17:54 +0000\n
 chiron3fs (3.0.1-1) unstable; urgency=medium
 
   * Initial Debian and Ubuntu packaging for chiron3fs.
 
  -- steigr <chiron3fs@stei.gr>  Sat, 18 Apr 2026 12:00:00 +0000
-

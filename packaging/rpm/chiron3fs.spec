@@ -1,5 +1,5 @@
 Name:           chiron3fs
-Version:        3.0.1
+Version:        3.0.2
 Release:        1%{?dist}
 Summary:        Fault-tolerant replicated filesystem facade built on FUSE3
 
@@ -36,6 +36,6 @@ through a mounted facade filesystem.
 %{_datadir}/doc/chiron3fs/*
 
 %changelog
-* Sat Apr 18 2026 steigr <chiron3fs@stei.gr> - 3.0.1-1
+* Sat Apr 18 2026 steigr <chiron3fs@stei.gr> - 3.0.2-1
 - Initial Fedora RPM packaging for chiron3fs.
 
